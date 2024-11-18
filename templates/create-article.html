@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Добавление анкеты
+{% endblock %}
+
+{% block body %}
+<div class="container-xl mt-5">
+    <h4 class="mb-3">Добавление участника</h4>
+    <form action="/create-article" method="post" enctype="multipart/form-data">
+        <div class="row g-3">
+            <div class="col-12">
+              <label for="st_name" class="form-label">ФИО</label>
+              <input type="text" class="form-control" name="st_name" id="st_name" placeholder="Введите ФИО">
+              <div class="invalid-feedback">
+                Valid name is required.
+              </div>
+            </div>
+
+            <div class="col-md-4">
+              <label for="num_group" class="form-label">Группа</label>
+              <input type="text" class="form-control" name="num_group" id="num_group" placeholder="Введите группу">
+              <div class="invalid-feedback">
+                Valid group is required.
+              </div>
+            </div>
+
+            <div class="col-md-4">
+              <label for="faculty" class="form-label">Факультет</label>
+              <select class="form-select" name="faculty" id="faculty">
+                <option>ФИТР</option>
+                <option>МИДО</option>
+                <option>АТФ</option>
+                <option>ФГДИЭ</option>
+                <option>МСФ</option>
+                <option>МТФ</option>
+                <option>ФММП</option>
+                <option>ЭФ</option>
+                <option>ФТУГ</option>
+                <option>ИПФ</option>
+                <option>ФЭС</option>
+                <option>АФ</option>
+                <option>СФ</option>
+                <option>ПСФ</option>
+                <option>ФТК</option>
+                <option>ВТФ</option>
+                <option>СТФ</option>
+                <option>ФМС</option>
+                <option>БНТУ-ТГТУ</option>
+                <option>ИТФ БНТУ-ТТУ</option>
+              </select>
+              <div class="invalid-feedback">
+                Please provide a valid faculty.
+              </div>
+            </div>
+
+            <div class="col-md-4">
+              <label for="image" class="form-label">Загрузить изображение:</label>
+              <input type="file" class="form-control" name="image" id="image" accept="image/*">
+            </div>
+
+            <div class="col-12">
+              <label for="main_text" class="form-label">Расскажите о себе</label>
+                <textarea class="form-control" name="main_text" id="main_text" placeholder="Введите основной текст"></textarea>
+            </div>
+        </div>
+        <hr class="my-4">
+        <button class="w-100 btn btn-success btn-lg" type="submit">Отправить</button>
+    </form>
+</div>
+{% endblock %}

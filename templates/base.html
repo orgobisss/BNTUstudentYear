@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="ru" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+    <title>{% block title %}{% endblock %}</title>
+</head>
+<body>
+
+
+<div class="container">
+    <header class="d-flex flex-nowrap align-items-center justify-content-between lh-1 py-3 border-bottom">
+      <div class="col-md-3 mb-md-0">
+        <a href="/" class="d-inline-flex link-body-emphasis text-decoration-none">
+          <img src="{{ url_for('static', filename='pic/logo.png') }}" alt="" width="64px" height="64px">
+        </a>
+      </div>
+
+      <ul class="nav col-12 col-md-auto justify-content-center mb-md-0">
+        <li><a href="/" class="nav-link link-success">Главная</a></li>
+        <li><a href="/create-article" class="nav-link link-success">Добавить</a></li>
+      </ul>
+
+      <div class="col-md-3 text-end">
+        <button type="button" class="btn btn-sm btn-outline-success">Login</button>
+        <button type="button" class="btn btn-sm btn-success">Sign-up</button>
+      </div>
+    </header>
+</div>
+
+
+    {% block body %}{% endblock %}
+<br>
+<footer class="py-5 text-center text-body-secondary bg-body-tertiary">
+  <p>Blog template built by <a href="https://t.me/kiwiasos" class="link-success">@kiwiasos</a>.</p>
+  <p class="mb-0">
+    <a href="#" class="link-success">Back to top</a>
+  </p>
+</footer>
+</body>
+</html>

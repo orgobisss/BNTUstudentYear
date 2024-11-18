@@ -1,0 +1,7 @@
+/* HEADER */
+header {
+    padding: 10рx;
+    z-index: 1000;
+    -webkit-box-shadow: 0 5рх 25рх rgba(0, О, О, О.15);
+            box-shadow: 0 5рх 25рх rgba(0, О, О, О.15);
+}
