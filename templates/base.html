@@ -13,27 +13,49 @@
 
 
 <div class="container">
-    <header class="d-flex flex-nowrap align-items-center justify-content-between lh-1 py-3 border-bottom">
-      <div class="col-md-3 mb-md-0">
+    <header class="px-sm-3 d-flex flex-wrap align-items-center justify-content-between py-3 border-bottom shadow rounded mb-4">
+      <!-- Логотип -->
+      <div class="col-12 col-md-3 mb-2 mb-md-0 text-center text-md-start">
         <a href="/" class="d-inline-flex link-body-emphasis text-decoration-none">
-          <img src="{{ url_for('static', filename='pic/logo.png') }}" alt="" width="64px" height="64px">
+          <img src="{{ url_for('static', filename='pic/logo.png') }}" alt="Logo" width="64px" height="64px">
         </a>
       </div>
 
-      <ul class="nav col-12 col-md-auto justify-content-center mb-md-0">
-        <li><a href="/" class="nav-link link-success">Главная</a></li>
-        <li><a href="/create-article" class="nav-link link-success">Добавить</a></li>
+      <!-- Навигация -->
+      <ul class="nav col-12 col-md-auto justify-content-center mb-2 mb-md-0">
+        <li><a href="/" class="nav-link px-2 link-success">Главная</a></li>
+        <li><a href="/create-article" class="nav-link px-2 link-success">Добавить</a></li>
       </ul>
 
-      <div class="col-md-3 text-end">
-        <button type="button" class="btn btn-sm btn-outline-success">Login</button>
-        <button type="button" class="btn btn-sm btn-success">Sign-up</button>
+      <!-- Кнопки -->
+      <div class="col-12 col-md-3 text-center text-md-end">
+        <a href="/signup" class="btn btn-sm btn-outline-success mb-2 mb-md-0">Зарегистрироваться</a>
+        <a href="/login" class="btn btn-sm btn-success">Войти</a>
       </div>
     </header>
 </div>
 
 
-    {% block body %}{% endblock %}
+{% block body %}{% endblock %}
+
+<script>
+  (function () {
+    'use strict';
+    const forms = document.querySelectorAll('.needs-validation');
+
+    Array.prototype.slice.call(forms).forEach(function (form) {
+      form.addEventListener('submit', function (event) {
+        if (!form.checkValidity()) {
+          event.preventDefault();
+          event.stopPropagation();
+        }
+        form.classList.add('was-validated');
+      }, false);
+    });
+  })();
+</script>
+
+
 <br>
 <footer class="py-5 text-center text-body-secondary bg-body-tertiary">
   <p>Blog template built by <a href="https://t.me/kiwiasos" class="link-success">@kiwiasos</a>.</p>

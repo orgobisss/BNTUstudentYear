@@ -21,11 +21,27 @@ class Article(db.Model):
         return '<Article %r>' % self.id
 
 
+# class User(db.Model):
+#     user_name = db.Column(db.String(100), nullable=False)
+#     st_id_card = db.Column(db.Integer, nullable=False)
+#     password = db.Column(db.String(100), nullable=False)
+
+
 @app.route('/')
 @app.route('/index')
 def index():
     articles = Article.query.all()
     return render_template("index.html", articles=articles)
+
+
+@app.route('/login')
+def login():
+    return render_template("login.html")
+
+
+@app.route('/signup')
+def signup():
+    return render_template("signup.html")
 
 
 @app.route('/create-article', methods=['POST', 'GET'])

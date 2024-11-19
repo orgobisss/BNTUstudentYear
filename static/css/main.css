@@ -1,7 +1,35 @@
-/* HEADER */
-header {
-    padding: 10рx;
-    z-index: 1000;
-    -webkit-box-shadow: 0 5рх 25рх rgba(0, О, О, О.15);
-            box-shadow: 0 5рх 25рх rgba(0, О, О, О.15);
+.bg-image-main {
+    background-image: url('/static/pic/main_bg.jpg');
+    background-size: cover; /* Масштабировать фон по размеру контейнера */
+    background-position: center; /* Центрировать фон */
+    height: 60vh; /* Высота секции */
+    position: relative; /* Для добавления слоёв */
+}
+
+.bg-image-login {
+    background-image: url('/static/pic/login_bg.jpg');
+    background-size: cover; /* Масштабировать фон по размеру контейнера */
+    background-position: center; /* Центрировать фон */
+    height: 100vh; /* Высота секции */
+    position: relative; /* Для добавления слоёв */
+}
+
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7); /* Полупрозрачный чёрный фон */
+    z-index: 1; /* Расположить поверх фона */
+}
+
+section {
+    position: relative; /* Контент поверх затемнения */
+    z-index: 2; /* Контент поверх overlay */
+}
+
+form {
+    position: relative; /* Контент поверх затемнения */
+    z-index: 2; /* Контент поверх overlay */
 }

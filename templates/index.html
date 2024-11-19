@@ -6,47 +6,45 @@
 
 {% block body %}
 <main class="container">
+  <div class="bg-image-main position-relative text-white text-center">
+    <!-- Затемнение -->
+    <div class="overlay"></div>
+    <!-- Контент -->
+    <section class="py-5 position-relative">
+        <div class="col-lg-6 mx-auto">
+            <h1 class="fw-light display-5"><b>Студент года БНТУ!!!</b></h1>
+            <p class="lead text-light">Привет! Ты попал на сайт, на котором представлены лучшие студенты нашего университета.
+                                Можешь оставить свой голос за одно из этих красавчиков,
+                                либо создать личную анкету и бороться с другими за звание Самого лучшего!
+                <br>Дерзай :)
+            </p>
+            <p>
+                <a href="/create-article" class="w-50 btn btn-success my-2">Добавить</a>
+            </p>
+        </div>
+    </section>
+  </div>
 
-  <section class="py-5 text-center">
-    <div class="row py-lg-5">
-      <div class="col-lg-6 col-md-10 mx-auto">
-        <h1 class="fw-light"><b>Студент года БНТУ!!!</b></h1>
-        <p class="lead text-body-secondary">Привет! Ты попал на сайт, на котором представлены лучшие студенты нашего университета.
-                                            Можешь оставить свой голос за одно из этих красавчиков,
-                                            либо создать личную анкету и бороться с другими за звание Самого лучшего!
-          <br>Дерзай:)
-        </p>
-        <p>
-          <a href="/create-article" class="w-50 btn btn-success my-2">Добавить</a>
-        </p>
-      </div>
-    </div>
-  </section>
 
-
-  <div class="row">
-
+  <div class="row pt-5">
     {% for el in articles %}
-    <div class="col-md-6 item">
+    <div class="col-md-6">
       <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
         <div class="col p-4 d-flex flex-column position-static">
           <strong class="d-inline-block mb-2 text-success-emphasis">{{ el.faculty }}</strong>
-          <h4 class="">{{ el.st_name }}</h4>
+          <h4>{{ el.st_name }}</h4>
           <div class="mb-2 text-body-secondary">{{ el.num_group }}</div>
-          <p class=" mb-auto">{{ el.main_text }}</p>
+          <p class="mb-auto">{{ el.main_text }}</p>
         </div>
         {% if el.image %}
-          <div class="col-auto d-none d-lg-block">
-            <img src="{{ url_for('image', article_id=el.id) }}" alt="Изображение" width="200" height="250">
-  <!--          <svg class="bd-placeholder-img" width="200" height="250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"></rect><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg>-->
-          </div>
+        <div class="col-auto d-flex align-items-center">
+          <img src="{{ url_for('image', article_id=el.id) }}" alt="Изображение" class="img-fluid rounded"  style="max-width: 200px; max-height: 250px;">
+        </div>
         {% endif %}
       </div>
     </div>
     {% endfor %}
-
   </div>
-
 
 </main>
 {% endblock %}
