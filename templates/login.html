@@ -6,57 +6,28 @@
 
 {% block body %}
 
-<div class="bg-image-login position-relative">
-    <!-- Затемнение -->
-    <div class="overlay"></div>
-    <!-- Контент -->
-    <section class="d-flex align-items-center justify-content-center" style="min-height: 100vh;">
-      <div class="container">
-        <div class="row justify-content-center">
-          <div class="col-12 col-md-6 col-lg-5">
-            <div class="card shadow-sm" style="border-radius: 1rem;">
-              <div class="card-body p-4 text-center">
+<h4 class="mb-3">Вход</h4>
+<!-- Поля формы -->
+<form action="/login" method="post" class="needs-validation" novalidate>
+  <div class="mb-3">
+    <label for="st_id_card" class="w-100 text-start form-label">№ студенческого</label>
+    <input type="text" class="form-control" name="st_id_card" id="st_id_card" placeholder="Введите № студенческого" required>
+    <div class="invalid-feedback">Пожалуйста, введите номер вашего студенческого.</div>
+  </div>
 
-                <!-- Заголовок -->
-                <a href="/" class="d-inline-flex link-body-emphasis text-decoration-none">
-                  <img src="{{ url_for('static', filename='pic/logo.png') }}" alt="Logo" width="64px" height="64px">
-                </a>
-                <h4 class="mb-3">Вход</h4>
-                <p class="mb-4 text-body-secondary">Please enter your login and password!</p>
+  <div class="mb-3">
+    <label for="password" class="w-100 text-start form-label">Пароль</label>
+    <input type="password" class="form-control" name="password" id="password" placeholder="Введите пароль" required>
+    <div class="invalid-feedback">Пожалуйста, введите пароль.</div>
+  </div>
 
-                <!-- Поля формы -->
-                <form action="/login" method="post" enctype="multipart/form-data" novalidate>
-                  <div class="mb-3">
-                    <label for="st_id_card" class="w-100 text-start form-label">№ студенческого</label>
-                    <input type="text" class="form-control" id="st_id_card" placeholder="Введите № студенческого" required>
-                    <div class="invalid-feedback">
-                      Пожалуйста, введите номер вашего студенческого.
-                    </div>
-                  </div>
+  <!-- Кнопка входа -->
+  <button class="btn btn-success btn-block" type="submit">Войти</button>
+</form>
 
-                  <div class="mb-3">
-                    <label for="password" class="w-100 text-start form-label">Пароль</label>
-                    <input type="password" class="form-control" id="password" placeholder="Введите пароль" required>
-                    <div class="invalid-feedback">
-                      Пожалуйста, введите пароль.
-                    </div>
-                  </div>
-
-                  <!-- Кнопка входа -->
-                  <button class="btn btn-success btn-block" type="submit">Войти</button>
-                </form>
-
-                <!-- Регистрация -->
-                <p class="mt-4 mb-0 text-body-secondary">Don't have an account?
-                  <a href="/signup" class="fw-bold link-success">Sign Up</a>
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-</div>
+<!-- Регистрация -->
+<p class="mt-4 mb-0 text-body-secondary">У вас ещё нет аккаунта?
+  <a href="/signup" class="fw-bold link-success">Зарегистрироваться</a>
+</p>
 
 {% endblock %}

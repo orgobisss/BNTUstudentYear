@@ -5,7 +5,7 @@
 {% endblock %}
 
 {% block body %}
-<div class="container-sm mt-5">
+<div class="container-xl mt-5">
     <h3 class="mb-3 text-center">Добавление участника</h3>
       <form action="/create-article" method="post" enctype="multipart/form-data" class="needs-validation" novalidate>
         <div class="row g-3">
@@ -18,9 +18,7 @@
             <div class="col-md-4">
               <label for="num_group" class="form-label">Группа</label>
               <input type="text" class="form-control" name="num_group" id="num_group" placeholder="Введите группу" required>
-              <div class="invalid-feedback">
-                Пожалуйста, введите вашу учебную группу.
-              </div>
+              <div class="invalid-feedback">Пожалуйста, введите вашу учебную группу.</div>
             </div>
 
             <div class="col-md-4">
@@ -47,25 +45,19 @@
                 <option>БНТУ-ТГТУ</option>
                 <option>ИТФ БНТУ-ТТУ</option>
               </select>
-              <div class="invalid-feedback">
-                Пожалуйста, выберите ваш факультет.
-              </div>
+              <div class="invalid-feedback">Пожалуйста, выберите ваш факультет.</div>
             </div>
 
             <div class="col-md-4">
               <label for="image" class="form-label">Загрузить изображение:</label>
               <input type="file" class="form-control" name="image" id="image" accept="image/*" required>
-              <div class="invalid-feedback">
-                Пожалуйста, добавьте свою фотографию.
-              </div>
+              <div class="invalid-feedback">Пожалуйста, добавьте свою фотографию.</div>
             </div>
 
             <div class="col-12">
               <label for="main_text" class="form-label">Расскажите о себе</label>
               <textarea class="form-control" name="main_text" id="main_text" placeholder="Введите основной текст" required></textarea>
-              <div class="invalid-feedback">
-                Пожалуйста, заполните это поле.
-              </div>
+              <div class="invalid-feedback">Пожалуйста, заполните это поле.</div>
             </div>
         </div>
         <hr class="my-4">
