@@ -29,8 +29,13 @@
 
       <!-- Кнопки -->
       <div class="col-12 col-md-3 text-center text-md-end">
-        <a href="/signup" class="btn btn-sm btn-outline-success mb-2 mb-md-0">Зарегистрироваться</a>
-        <a href="/login" class="btn btn-sm btn-success">Войти</a>
+          {% if session.get('user_id') %}
+            <span class="me-2">{{ session.get('user_name') }}</span>
+            <a href="/logout" class="btn btn-sm btn-outline-success">Выйти</a>
+        {% else %}
+            <a href="/signup" class="btn btn-sm btn-outline-success mb-2 mb-md-0">Зарегистрироваться</a>
+            <a href="/login" class="btn btn-sm btn-success">Войти</a>
+        {% endif %}
       </div>
     </header>
 
@@ -46,6 +51,42 @@
 </div>
 
 {% block body %}{% endblock %}
+
+
+
+<!--обработка кликов по кнопке лайка без перезагрузки страницы.-->
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const likeButtons = document.querySelectorAll('.like-btn');
+
+  likeButtons.forEach(button => {
+    button.addEventListener('click', function () {
+      const articleId = this.dataset.articleId; // ID статьи из атрибута data-article-id
+      const likeCount = document.getElementById(`like-count-${articleId}`); // Контейнер для количества лайков
+
+      // Отправка запроса на сервер
+      fetch(`/like/${articleId}`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' }
+      })
+        .then(response => response.json())
+        .then(data => {
+          if (data.success) {
+            // Обновляем количество лайков
+            likeCount.textContent = data.likes;
+          } else {
+            // Вывод ошибки, если сервер вернул её
+            alert(data.message || 'Произошла ошибка');
+          }
+        })
+        .catch(error => {
+          console.error('Ошибка:', error);
+        });
+    });
+  });
+});
+</script>
+
 
 <script>
   (function () {
@@ -66,10 +107,10 @@
 
 
 <br>
-<footer class="py-5 text-center text-body-secondary bg-body-tertiary">
+<footer class="py-4 text-center text-body-secondary bg-body-tertiary">
   <p>Blog template built by <a href="https://t.me/kiwiasos" class="link-success">@kiwiasos</a>.</p>
   <p class="mb-0">
-    <a href="#" class="link-success">Back to top</a>
+    <a href="#" class="link-success">Наверх</a>
   </p>
 </footer>
 </body>

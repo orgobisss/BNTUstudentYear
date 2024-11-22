@@ -28,17 +28,24 @@
 
   <div class="row pt-5">
     {% for el in articles %}
-    <div class="col-md-6">
-      <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
-        <div class="col p-4 d-flex flex-column position-static">
-          <strong class="d-inline-block mb-2 text-success-emphasis">{{ el.faculty }}</strong>
+    <div class="col-md-6 d-flex">
+      <div class="row g-0 w-100 border rounded overflow-hidden mb-4 shadow-sm position-relative">
+        <div class="col p-4 d-flex flex-column justify-content-between position-static">
           <h4>{{ el.st_name }}</h4>
+          <strong class="d-inline-block mb-2 text-success-emphasis">{{ el.faculty }}</strong>
           <div class="mb-2 text-body-secondary">{{ el.num_group }}</div>
           <p class="mb-auto">{{ el.main_text }}</p>
+          <!-- Обёртка для кнопки -->
+          <div class="d-inline-block mt-2">
+            <button class="btn btn-outline-success like-btn" data-article-id="{{ el.id }}">
+              ❤️ <span id="like-count-{{ el.id }}">{{ el.likes }}</span>
+            </button>
+          </div>
         </div>
         {% if el.image %}
         <div class="col-auto d-flex align-items-center">
-          <img src="{{ url_for('image', article_id=el.id) }}" alt="Изображение" class="img-fluid rounded"  style="max-width: 200px; max-height: 250px;">
+          <img src="{{ url_for('image', article_id=el.id) }}" alt="Изображение"
+               class="img-fluid rounded"  style="max-width: 200px; max-height: 300px;">
         </div>
         {% endif %}
       </div>

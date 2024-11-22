@@ -1,24 +1,39 @@
 {% extends 'log.html' %}
 
 {% block title %}
-Вход
+Авторизация
 {% endblock %}
 
 {% block body %}
 
-<h4 class="mb-3">Вход</h4>
+<h4 class="mb-3">Авторизация</h4>
 <!-- Поля формы -->
 <form action="/login" method="post" class="needs-validation" novalidate>
   <div class="mb-3">
     <label for="st_id_card" class="w-100 text-start form-label">№ студенческого</label>
-    <input type="text" class="form-control" name="st_id_card" id="st_id_card" placeholder="Введите № студенческого" required>
-    <div class="invalid-feedback">Пожалуйста, введите номер вашего студенческого.</div>
+    <input type="text" class="form-control {% if error %}is-invalid{% endif %}"
+           name="st_id_card" id="st_id_card" placeholder="Введите № студенческого" required
+           pattern="^\d+$" title="Пожалуйста, введите только цифры.">
+    <div class="invalid-feedback">
+      {% if error %}
+        {{ error }}
+      {% else %}
+        Пожалуйста, введите номер вашего студенческого.
+      {% endif %}
+    </div>
   </div>
 
   <div class="mb-3">
     <label for="password" class="w-100 text-start form-label">Пароль</label>
-    <input type="password" class="form-control" name="password" id="password" placeholder="Введите пароль" required>
-    <div class="invalid-feedback">Пожалуйста, введите пароль.</div>
+    <input type="password" class="form-control{% if password_error %}is-invalid{% endif %}"
+           name="password" id="password" placeholder="Введите пароль" required minlength="6">
+    <div class="invalid-feedback">
+    {% if password_error %}
+      {{ password_error }}
+    {% else %}
+      Пожалуйста, введите пароль.
+    {% endif %}
+    </div>
   </div>
 
   <!-- Кнопка входа -->
