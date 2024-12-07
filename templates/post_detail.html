@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block title %}
+{{ article.st_name }}
+{% endblock %}
+
+{% block body %}
+<main class="container-xl mt-5">
+  <h3 class="mb-3 text-center">{{ article.st_name }}</h3>
+
+  <div class="row pt-5">
+    <div class="d-flex">
+      <div class="row g-0 w-100 border rounded overflow-hidden mb-4 shadow-sm position-relative">
+        <div class="col p-4 d-flex flex-column justify-content-between position-static">
+          <h4>{{ article.st_name }}</h4>
+          <strong class="d-inline-block mb-2 text-success-emphasis">{{ article.faculty }}</strong>
+          <div class="mb-2 text-body-secondary">{{ article.num_group }}</div>
+          <p class="mb-auto">{{ article.main_text }}</p>
+          <!-- Обёртка для кнопки -->
+          <div class="row mt-2">
+            <div class="col-md-6">
+              <a class="btn btn-sm btn-success like-btn">
+                ❤️ <span id="like-count-{{ article.id }}">{{ article.likes }}</span>
+              </a>
+            </div>
+            <div class="col-md-6 text-end">
+              <a href="/posts/{{ article.id }}/delete" class="btn btn-sm btn-danger">Удалить</a>
+              <a href="/posts/{{ article.id }}/update" class="btn btn-sm btn-warning">Редактировать</a>
+            </div>
+          </div>
+        </div>
+        {% if article.image %}
+        <div class="col-auto d-flex align-items-center">
+          <img src="{{ url_for('image', article_id=article.id) }}" alt="Изображение"
+               class="img-fluid rounded"  style="max-width: 200px; max-height: 300px;">
+        </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+
+</main>
+{% endblock %}

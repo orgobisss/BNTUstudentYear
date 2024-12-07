@@ -19,9 +19,9 @@ class Article(db.Model):
     num_group = db.Column(db.Integer, nullable=False)
     faculty = db.Column(db.String(50), nullable=False)
     main_text = db.Column(db.Text, nullable=False)
-    image = db.Column(db.LargeBinary)
+    image = db.Column(db.LargeBinary, nullable=True)
     likes = db.Column(db.Integer, default=0)  # Количество лайков
-    liked_by = db.relationship('Like', backref='article', lazy=True)  # Связь с лайками
+    liked_by = db.relationship('Like', backref='article', cascade='all, delete-orphan', lazy=True)  # Связь с лайками
 
     def __repr__(self):
         return '<Article %r>' % self.id
@@ -46,8 +46,96 @@ class User(db.Model):
 @app.route('/')
 @app.route('/index')
 def index():
-    articles = Article.query.all()
-    return render_template("index.html", articles=articles)
+    articles_main = Article.query.all()
+    return render_template("index.html", articles_main=articles_main)
+
+
+@app.route('/create-article', methods=['POST', 'GET'])
+def create_article():
+    if not session.get('user_id'):
+        flash('Вам необходимо авторизоваться для добавления анкеты.', 'danger')
+        return redirect('/login')
+
+    if request.method == "POST":
+        st_name = request.form['st_name']
+        num_group = request.form['num_group']
+        faculty = request.form['faculty']
+        main_text = request.form['main_text']
+        image = request.files['image']
+
+        # Если изображение было загружено, преобразуем его в бинарные данные
+        image_data = image.read() if image else None
+
+        new_article = Article(st_name=st_name, num_group=num_group, faculty=faculty, main_text=main_text, image=image_data)
+
+        try:
+            db.session.add(new_article)
+            db.session.commit()
+            flash('Ваша анкета успешно добавлена!', 'success')
+            return redirect('/')
+        except Exception as e:
+            return f"Ошибка при добавлении анкеты! {str(e)}"
+    else:
+         return render_template("create-article.html")
+
+
+@app.route('/posts')
+def posts():
+    articles = Article.query.order_by(Article.likes.desc()).all()
+    return render_template("posts.html", articles=articles)
+
+
+@app.route('/posts/<int:id>')
+def post_detail(id):
+    article = Article.query.get(id)
+    return render_template("post_detail.html", article=article)
+
+
+@app.route('/posts/<int:id>/delete')
+def post_delete(id):
+    if not session.get('user_id'):
+        flash('Вам необходимо авторизоваться для удаления анкеты.', 'danger')
+        return redirect('/login')
+
+    article = Article.query.get_or_404(id)
+
+    try:
+        db.session.delete(article)
+        db.session.commit()
+        flash('Анкета успешно удалена!', 'success')
+        return redirect('/posts')
+    except Exception as e:
+        return f"Ошибка при удалении анкеты! {str(e)}"
+
+
+@app.route('/posts/<int:id>/update', methods=['POST', 'GET'])
+def post_update(id):
+    if not session.get('user_id'):
+        flash('Вам необходимо авторизоваться для обновления анкеты.', 'danger')
+        return redirect('/login')
+
+    article = Article.query.get(id)
+
+    if request.method == "POST":
+        # Обновление полей
+        article.st_name = request.form['st_name']
+        article.num_group = request.form['num_group']
+        article.faculty = request.form['faculty']
+        article.main_text = request.form['main_text']
+
+        # Обработка изображения
+        if 'image' in request.files and request.files['image'].filename:
+            image = request.files['image']
+            article.image = image.read()  # Сохранение новых данных изображения
+
+        try:
+            db.session.commit()
+            flash('Анкета успешно обновлена!', 'success')
+            return redirect('/posts')
+        except Exception as e:
+            return f"Ошибка при редактировании анкеты! {str(e)}"
+    else:
+        return render_template("post_update.html", article=article)
 
 
 @app.route('/signup', methods=['POST', 'GET'])
@@ -150,7 +238,7 @@ def profile():
 @app.route('/like/<int:article_id>', methods=['POST'])
 def like_article(article_id):
     if 'user_id' not in session:
-        return {"danger": False, "message": "Вы должны быть авторизованы для лайка."}, 403
+        return {"danger": False, "message": "Вам необходимо авторизоваться для добавления лайка."}, 403
 
     user_id = session['user_id']
     article = Article.query.get_or_404(article_id)
@@ -172,38 +260,13 @@ def like_article(article_id):
     return {"success": True, "likes": article.likes}
 
 
-@app.route('/create-article', methods=['POST', 'GET'])
-def create_article():
-    if request.method == "POST":
-        st_name = request.form['st_name']
-        num_group = request.form['num_group']
-        faculty = request.form['faculty']
-        main_text = request.form['main_text']
-        image = request.files['image']
-
-        # Если изображение было загружено, преобразуем его в бинарные данные
-        image_data = image.read() if image else None
-
-        new_article = Article(st_name=st_name, num_group=num_group, faculty=faculty, main_text=main_text, image=image_data)
-
-        try:
-            db.session.add(new_article)
-            db.session.commit()
-            flash('Ваша анкета успешно добавлена!', 'success')
-            return redirect('/')
-        except:
-            return "Ошибка при добавлении анкеты!"
-    else:
-         return render_template("create-article.html")
-
-
 @app.route('/image/<int:article_id>')
 def image(article_id):
     # Извлекаем изображение для статьи
     article = Article.query.get_or_404(article_id)
     if article.image:
         return send_file(BytesIO(article.image), mimetype='image/jpeg')
-    return "No image", 404
+    return "Нет изображения", 404
 
 
 if __name__ == "__main__":

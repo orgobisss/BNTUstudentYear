@@ -1,23 +1,25 @@
 {% extends 'base.html' %}
 
 {% block title %}
-Добавление анкеты
+Обновление анкеты
 {% endblock %}
 
 {% block body %}
 <div class="container-xl mt-5">
-    <h3 class="mb-3 text-center">Добавление участника</h3>
-      <form action="/create-article" method="post" enctype="multipart/form-data" class="needs-validation" novalidate>
+    <h3 class="mb-3 text-center">Обновление анкеты</h3>
+      <form method="post" enctype="multipart/form-data" class="needs-validation" novalidate>
         <div class="row g-3">
             <div class="col-12">
               <label for="st_name" class="form-label">ФИО</label>
-              <input type="text" class="form-control" name="st_name" id="st_name" placeholder="Введите ФИО" required>
+              <input type="text" class="form-control" name="st_name" id="st_name"
+                     value="{{ article.st_name }}" placeholder="Введите ФИО" required>
               <div class="invalid-feedback">Пожалуйста, введите ваше ФИО.</div>
             </div>
 
             <div class="col-md-4">
               <label for="num_group" class="form-label">Группа</label>
-              <input type="text" class="form-control" name="num_group" id="num_group" placeholder="Введите группу" required>
+              <input type="text" class="form-control" name="num_group" id="num_group"
+                     value="{{ article.num_group }}" placeholder="Введите группу" required>
               <div class="invalid-feedback">Пожалуйста, введите вашу учебную группу.</div>
             </div>
 
@@ -56,12 +58,13 @@
 
             <div class="col-12">
               <label for="main_text" class="form-label">Расскажите о себе</label>
-              <textarea class="form-control" name="main_text" id="main_text" placeholder="Введите основной текст" required></textarea>
+              <textarea class="form-control" name="main_text" id="main_text"
+                        placeholder="Введите основной текст" required>{{ article.main_text }}</textarea>
               <div class="invalid-feedback">Пожалуйста, заполните это поле.</div>
             </div>
         </div>
         <hr class="my-4">
-        <button class="w-100 btn btn-success btn-lg" type="submit">Отправить</button>
+        <button class="w-100 btn btn-success btn-lg" type="submit">Обновить</button>
       </form>
 </div>
 {% endblock %}

@@ -1,31 +1,14 @@
 {% extends 'base.html' %}
 
 {% block title %}
-Главная страница
+Все анкеты
 {% endblock %}
 
 {% block body %}
-<main class="container-xl">
-  <div class="bg-image-main position-relative text-white text-center">
-    <!-- Затемнение -->
-    <div class="overlay"></div>
-    <!-- Контент -->
-    <section class="py-5 position-relative">
-        <div class="col-lg-6 mx-auto">
-            <h1 class="fw-light display-5"><b>Студент года БНТУ!!!</b></h1>
-            <p class="lead text-light">Привет! Ты попал на сайт, на котором представлены лучшие студенты нашего университета.
-                                Можешь оставить свой голос за одно из этих красавчиков,
-                                либо создать личную анкету и бороться с другими за звание Самого лучшего!
-                <br>Дерзай :)
-            </p>
-            <p>
-                <a href="/create-article" class="w-50 btn btn-success my-2">Добавить</a>
-            </p>
-        </div>
-    </section>
-  </div>
+<main class="container-xl mt-5">
+  <h3 class="mb-3 text-center">Все анкеты</h3>
 
-    <!-- Контейнер для уведомлений -->
+  <!-- Контейнер для уведомлений -->
     <div class="position-fixed bottom-10 end-0 p-3" style="z-index: 11">
         <div id="custom-toast" class="toast align-items-center text-bg-danger border-0" role="alert" aria-live="assertive" aria-atomic="true">
             <div class="d-flex">
@@ -38,7 +21,7 @@
     </div>
 
   <div class="row pt-5">
-    {% for el in articles_main %}
+    {% for el in articles %}
     <div class="col-md-6 d-flex">
       <div class="row g-0 w-100 border rounded overflow-hidden mb-4 shadow-sm position-relative">
         <div class="col p-4 d-flex flex-column justify-content-between position-static">
@@ -47,10 +30,15 @@
           <div class="mb-2 text-body-secondary">{{ el.num_group }}</div>
           <p class="mb-auto">{{ el.main_text }}</p>
           <!-- Обёртка для кнопки -->
-          <div class="d-inline-block mt-2">
-            <button class="btn btn-sm btn-outline-success like-btn" data-article-id="{{ el.id }}">
-              ❤️ <span id="like-count-{{ el.id }}">{{ el.likes }}</span>
-            </button>
+          <div class="row mt-2">
+            <div class="col-md-6">
+              <button class="btn btn-sm btn-outline-success like-btn" data-article-id="{{ el.id }}">
+                ❤️ <span id="like-count-{{ el.id }}">{{ el.likes }}</span>
+              </button>
+            </div>
+            <div class="col-md-6">
+            <a href="/posts/{{ el.id }}" class="btn btn-sm btn-info ms-auto">Подробнее</a>
+            </div>
           </div>
         </div>
         {% if el.image %}
